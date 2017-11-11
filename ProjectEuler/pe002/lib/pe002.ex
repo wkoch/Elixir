@@ -39,7 +39,7 @@ defmodule PE002 do
       [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
   """
   def list_n_fibs(n) do
-    Enum.map(1..n, fn x -> PE002.fib(x) end)
+    Enum.map(1..n, &fib/1)
   end
 
 
@@ -52,7 +52,7 @@ defmodule PE002 do
       [2, 4, 6, 8]
   """
   def reject_odds(list) do
-    Enum.reject(list, &Integer.is_odd/1)
+    list |> Enum.reject(&Integer.is_odd/1)
   end
 
 
@@ -65,7 +65,7 @@ defmodule PE002 do
       [1, 2, 3, 4]
   """
   def reject_bigger_than(list, limit) do
-    Enum.reject(list, fn x -> x > limit end)
+    list |> Enum.reject(&(&1 > limit))
   end
 
 
@@ -78,11 +78,10 @@ defmodule PE002 do
       44
   """
   def solve(limit) do
-    listed_fibs = list_n_fibs(34) # Little hack
-    rejected_too_big = reject_bigger_than(listed_fibs, limit)
-    filtered_odds = reject_odds(rejected_too_big)
-
-    Enum.reduce(filtered_odds, 0, &(&1 + &2))
+    list_n_fibs(34) # Little hack
+    |> reject_bigger_than(limit)
+    |> reject_odds
+    |> Enum.reduce(0, &(&1 + &2))
   end
 
 
@@ -90,6 +89,6 @@ defmodule PE002 do
   Prints the solution for Problem 002.
   """
   def print do
-    IO.puts solve(4_000_000)
+    solve(4_000_000) |> IO.puts
   end
 end

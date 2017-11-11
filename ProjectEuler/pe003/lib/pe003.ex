@@ -1,6 +1,6 @@
 defmodule PE003 do
   @moduledoc """
-  Documentation for PE003.
+  Documentation for Problem 003 from Projet Euler.
   """
 
   @doc """
@@ -27,7 +27,8 @@ defmodule PE003 do
     if n < 2 do
       false
     else
-      case length(Enum.filter(1..n, fn x -> rem(n, x) == 0 end)) do
+      try_prime = 1..n |> Enum.filter(&(rem(n, &1) == 0)) |> length
+      case try_prime do
         2 -> true
         _ -> false
       end
@@ -46,10 +47,12 @@ defmodule PE003 do
   def list_prime_factors(n) do
     limit = case n do
       x when x < 10_000 -> x
-      _ -> y = 10_000
+      _                 -> 10_000
     end
-    primes = Enum.filter(1..limit, fn x -> is_prime? x end)
-    Enum.filter(primes, fn x -> rem(n, x) == 0 end)
+    
+    1..limit
+    |> Enum.filter(&is_prime?/1)
+    |> Enum.filter(&(rem(n, &1) == 0))
   end
 
 
@@ -62,10 +65,11 @@ defmodule PE003 do
       29
   """
   def solve(n) do
-    List.last(list_prime_factors(n))
+    list_prime_factors(n)
+    |> List.last
   end
 
   def print do
-    IO.puts solve(600851475143)
+    solve(600851475143) |> IO.puts
   end
 end

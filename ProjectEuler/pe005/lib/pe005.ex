@@ -15,7 +15,8 @@ defmodule PE005 do
       false
   """
   def divisible_by_all_betwen?(n, range) do
-    Enum.reduce(Enum.map(range, &(rem(n, &1))), 0, &(&1 + &2)) == 0
+    0 == Enum.map(range, &(rem(n, &1)))
+    |> Enum.reduce(0, &(&1 + &2))
   end
 
 
@@ -28,7 +29,9 @@ defmodule PE005 do
       2520
   """
   def solve(limit, range) do
-    Stream.take(Stream.drop_while(limit, &(!divisible_by_all_betwen?(&1, range))),1)
+    limit
+      |> Stream.drop_while(&(!divisible_by_all_betwen?(&1, range)))
+      |> Stream.take(1)
       |> Enum.to_list
       |> hd
   end

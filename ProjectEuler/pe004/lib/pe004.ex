@@ -26,10 +26,9 @@ defmodule PE004 do
       9009
   """
   def find_palindrome_from_biggest_product(n) do
-    products = Enum.map(n..1, fn a -> Enum.map(n..1, fn b -> a * b end) end)
+    Enum.map(n..1, fn a -> Enum.map(n..1, fn b -> a * b end) end)
       |> List.flatten
-    
-    Enum.filter(products, &(is_a_palindrome?(&1)))
+      |> Enum.filter(&is_a_palindrome?/1)
       |> Enum.sort
       |> List.last
   end

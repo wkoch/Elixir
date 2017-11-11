@@ -13,7 +13,8 @@ defmodule PE001 do
 
   """
   def filter_multiples_of_3_or_5(list) do
-    Enum.filter(list, fn x -> rem(x, 3) == 0 or rem(x, 5) == 0 end)
+    list
+    |> Enum.filter(&(rem(&1, 3) == 0 or rem(&1, 5) == 0))
   end
 
   @doc """
@@ -26,9 +27,8 @@ defmodule PE001 do
 
   """
   def solve(list) do
-    multiples = filter_multiples_of_3_or_5(list)
-    
-    Enum.reduce(multiples, 0, &(&1 + &2))
+    filter_multiples_of_3_or_5(list)
+    |> Enum.reduce(0, &(&1 + &2))
   end
 
 
@@ -36,6 +36,6 @@ defmodule PE001 do
   Prints the solution for Problem 001
   """
   def print() do
-    IO.puts solve(1..999)
+    solve(1..999) |> IO.puts
   end
 end
