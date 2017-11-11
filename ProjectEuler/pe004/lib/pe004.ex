@@ -1,6 +1,6 @@
 defmodule PE004 do
   @moduledoc """
-  Documentation for PE004.
+  Documentation for Problem 004 from Projet Euler.
   """
 
   @doc """
