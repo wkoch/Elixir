@@ -29,7 +29,7 @@ defmodule PE004 do
     products = Enum.map(n..1, fn a -> Enum.map(n..1, fn b -> a * b end) end)
       |> List.flatten
     
-    Enum.filter(products, fn x -> is_a_palindrome?(x) end)
+    Enum.filter(products, &(is_a_palindrome?(&1)))
       |> Enum.sort
       |> List.last
   end
